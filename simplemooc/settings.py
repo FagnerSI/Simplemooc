@@ -136,7 +136,7 @@ EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_PASSWORD ='00000000'
 # EMAIL_PORT = 587
 
-CONTACT_EMAIL = 'fagner314@gmail.com'
+CONTACT_EMAIL = 'admin@mail.com'
 
 #Auth
 LOGIN_URL = 'accounts:login' 
