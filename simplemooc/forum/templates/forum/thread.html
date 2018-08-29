@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'core:home' %}">Início</a></li>
+            <li>/</li>
+            <li><a href="{% url 'forum:index' %}">Fórum de Discussões</a></li>
+            <li>/</li>
+            <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+        </ul>
+    </div>
+    <div class="pure-u-1-3">
+        <div class="pure-menu pure-menu-open">
+            <ul>
+                <li class="pure-menu-heading">
+                    Tópicos do Fórum
+                </li>
+                <li>
+                    <a href="?order=">
+                        <i class="fa fa-refresh"></i>
+                        Mais Recentes
+                    </a>
+                </li>
+                <li>
+                    <a href="?order=views">
+                        <i class="fa fa-eye"></i>
+                        Mais Visualizados
+                    </a>
+                </li>
+                <li>
+                    <a href="?order=answers">
+                        <i class="fa fa-comments-o"></i>
+                        Mais Comentados
+                    </a>
+                </li>
+                <li class="pure-menu-heading">Tags</li>
+                <li>
+                    {% for tag in tags %}
+                    <a href="{% url 'forum:index_tagged' tag.slug %}" class="tags">
+                        <i class="fa fa-tag"></i>
+                        {{ tag }}
+                    </a>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pure-u-2-3">
+        <div class="inner">
+            <div class="well">
+                <h2>{{ object }}</h2>
+                  {{ object.body|linebreaks }}              
+                <p>
+                    <i class="fa fa-tags"></i>
+                    {% for tag in object.tags.all %}
+                    <a href="{% url 'forum:index_tagged' tag.slug %}" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                    <a class="fright" href="" title="">Criado por <b>{{ object.author }}</b>
+                                                       a {{ object.created|timesince }} atrás</a>
+                </p>
+            </div>
+            <div class="well" id="div-comments">
+                <h4 id="comments">Respostas
+                <a class="fright" href="#add_comment">Responder</a></h4>
+                {% for reply in object.replies.all %}
+                <hr />
+                <p>  
+                    <strong>{{ reply.author }}</strong> 
+                    <br>
+                    {{ reply.reply|linebreaksbr }}
+                    <span class="fright">à {{ reply.created|timesince }} atrás.</span>    
+                    <br>
+                    <br>                   
+                        {% if reply.correct %} 
+                             {% if object.author == user %}
+                              <a href="{% url 'forum:reply_incorrect' reply.pk %}" title="" class="pure-button button-error reply-cancel-correct-lnk{%  if not reply.correct %} hidden{% endif %}">Cancelar Resposta Correta</a>   
+                             {% endif %}
+                             
+                             <span class="fright label-success"><i class="fa fa fa-check"></i> Correta!</span>   
+
+                        {% elif object.author == user %}
+                            <a href="{% url 'forum:reply_correct' reply.pk %}" title="Essa resposta é a correta?" class="pure-button button-success">Resposta Correta</a>
+                        {% endif %}                   
+                   </p>                   
+                {% endfor %}
+
+                <hr />
+                <form method="post" class="pure-form pure-form-stacked" id="add_comment">
+                    <fieldset>
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="pure-control-group">
+                            {{ filed.label_tag }}
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                        {% endfor %}
+                        <div class="pure-controls">
+                            <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

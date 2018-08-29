@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^', include('simplemooc.core.urls', namespace='core')),
     url(r'^conta/', include('simplemooc.accounts.urls', namespace='accounts')),
     url(r'^cursos/', include('simplemooc.courses.urls', namespace='courses')),
+    url(r'^forum/', include('simplemooc.forum.urls', namespace='forum')),
     url(r'^admin/', admin.site.urls),
     url(r'^favicon\.ico$',RedirectView.as_view(url='/static/img/favicon.ico')),
 ]
