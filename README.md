@@ -5,16 +5,16 @@ Python WEB com Django
 - Python 3.5 e Django 1.11
 
 - Instalação do Virtualenv 
-  -- pip install virtualenv
+   -- pip install virtualenv
     
 - Instalação do Model Mommy
-  -- pip install model_mommy
+   -- pip install model_mommy
   
 - Instalação do Pillow
-  -- pip install Pillow
+   -- pip install Pillow
   
 - Instalação do Django Taggit   
-  -- pip install django-taggit   
+   -- pip install django-taggit   
   
   
   
