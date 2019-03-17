@@ -16,6 +16,8 @@ Python WEB com Django
 - Instalação do Django Taggit   
   -- pip install django-taggit   
   
+  
+  
 Na dúvida de como preparar o ambiente, acesse:
 http://pythonclub.com.br/primeiro-projeto-django-no-linux-com-sublime.html
 
